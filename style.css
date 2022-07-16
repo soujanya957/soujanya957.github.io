@@ -1,87 +1,154 @@
-@import url('https://fonts.googleapis.com/css?family=Oswald:400,700');
-*
-{
-   margin: 0;
-   padding: 0;
-   box-sizing: border-box;
-   font-family: 'Oswald', sans-serif; 
+@import url('https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
-body {
+.banner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.banner .box {
+    position: relative;
+    height: 100vh;
+}
+.banner .box:last-child {
+    background: #ff0;
+}
+header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 60px;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.logo {
+    position: relative;
+    font-size: 1.4em;
+    color: #111;
+    font-weight: 700;
+    text-decoration: none;
+}
+header ul {
+    display: flex;
+}
+header ul li {
+    list-style: none;
+    margin-left: 30px;
+}
+header ul li a {
+    text-decoration: none;
+    font-weight: 500;
+    color: #bdbdbd;
+    letter-spacing: 1px;
+}
+header ul li a:hover {
+    color: #333;
+}
+.content {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    background: #434750;
-
+    padding: 60px;
 }
-
-ul{
-    position: relative;
-    transform: skewY(-15deg);
+.content h2 {
+    font-size: 4em;
+    color: #333;
 }
-
-ul li {
-    position: relative;
-    list-style: none;
-    width: 200px;
-    background: #3e3f46;
-    padding: 15px;
-    z-index: var(--i);
+.content p {
+    font-size: 1.1em;
+    color: #777;
+    line-height: 1.8em;
+}
+.btn {
+    display: inline-block;
+    font-size: 1.1em;
+    margin-top: 20px;
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+    border: 2px solid #333;
+    padding: 10px 30px; 
+    letter-spacing: 1px;
     transition: 0.5s;
-
 }
-
-ul li:hover {
-    background: #33a3ee;
-    transform: translateX(-50px);
+.btn:hover {
+    background: #333;
+    color: #fff;
+    letter-spacing: 2px;
 }
-
-
-ul li::before {
-    content: '';
+.sci {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    bottom: 30px;
+    right: 60px;
+}
+.sci h3 {
+    font-weight: 500;
+    color: #bdbdbd;
+    letter-spacing: 1px;
+}
+.sci li {
+    list-style: none;
+    margin-left: 20px;
+}
+.sci li img {
+    max-width: 30px;
+}
+.images {
+    display: flex;
+    flex-wrap: wrap;
+}
+.images .imgBx {
+    position: relative;
+    width: 50%;
+    height: 50vh;
+    background: #0f0;
+}
+.images .imgBx:nth-child(2) {
+    background: #00f;
+}
+.images .imgBx:nth-child(3) {
+    width: 100%;
+    background: #ff0;
+}
+.images .imgBx img {
     position: absolute;
     top: 0;
-    left: -40px;
-    width: 40px;
-    height: 100%;
-    background: #2e3133;
-    transform-origin: right;
-    transform: skewY(45deg);
-    transition: 0.5s;
-}
-ul li:hover::before {
-    background: #1f5378;
-}
-
-ul li::after {
-    content: '';
-    position: absolute;
-    top: -40px;
     left: 0;
     width: 100%;
-    height: 40px;
-    background: #35383e;
-    transform-origin: bottom;
-    transform: skewX(45deg);
-    transition: 0.5s;
+    height: 100%;
+    object-fit: cover;
 }
-
-ul li:hover::after {
-    background: #1f5378;
+@media (max-width: 1030px) {
+    .banner {
+        grid-template-columns: 1fr;
+    }
+    header {
+        padding: 20px 40px;
+    }
+    .content {
+        padding: 40px;
+    }
+    .banner .box.content {
+        height: 70vh;
+    }
+    .banner .box.images {
+        height: auto;
+    }
 }
-
-ul li a {
-   text-decoration: none;
-   color: #999; 
-   display: block;
-   text-transform: uppercase;
-   letter-spacing: 0.05em;
-   transition: 0.5s;
-}
-ul li:hover a {
-    color: #fff;
-}
-
-ul li:last-child::after {
-    box-shadow: -120px 120px 20px rgba(0,0,0,0.25);;
+@media (max-width: 600px) {
+    .content h2 {
+        font-size: 3em;
+    }
+    .images .imgBx {
+        width: 100%;
+        height: 40vh;
+    }
 }

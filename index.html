@@ -1,107 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="utf-8">
-        <title>Souju's Website</title>
-        <!--<link rel="stylesheet" href="style.css" type="text"> -->
-        <style>
-            @import url('https://fonts.googleapis.com/css?family=Oswald:400,700');
-*
-{
-   margin: 0;
-   padding: 0;
-   box-sizing: border-box;
-   font-family: 'Oswald', sans-serif; 
-}
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: #434750;
-
-}
-
-ul{
-    position: relative;
-    transform: skewY(-15deg);
-}
-
-ul li {
-    position: relative;
-    list-style: none;
-    width: 200px;
-    background: #3e3f46;
-    padding: 15px;
-    z-index: var(--i);
-    transition: 0.5s;
-
-}
-
-ul li:hover {
-    background: #33a3ee;
-    transform: translateX(-50px);
-}
-
-
-ul li::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -40px;
-    width: 40px;
-    height: 100%;
-    background: #2e3133;
-    transform-origin: right;
-    transform: skewY(45deg);
-    transition: 0.5s;
-}
-ul li:hover::before {
-    background: #1f5378;
-}
-
-ul li::after {
-    content: '';
-    position: absolute;
-    top: -40px;
-    left: 0;
-    width: 100%;
-    height: 40px;
-    background: #35383e;
-    transform-origin: bottom;
-    transform: skewX(45deg);
-    transition: 0.5s;
-}
-
-ul li:hover::after {
-    background: #1f5378;
-}
-
-ul li a {
-   text-decoration: none;
-   color: #999; 
-   display: block;
-   text-transform: uppercase;
-   letter-spacing: 0.05em;
-   transition: 0.5s;
-}
-ul li:hover a {
-    color: #fff;
-}
-
-ul li:last-child::after {
-    box-shadow: -120px 120px 20px rgba(0,0,0,0.25);;
-}
-        </style>
+        <meta name="viewport" content="width=device-width, intial-scale=1.0">
+        <title>Website Layout</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
-        <ul>
-            <li style="--i:6;"><a href="#">Home</a></li>
-            <li style="--i:5;"><a href="#">About</a></li>
-            <li style="--i:4;"><a href="#">Services</a></li>
-            <li style="--i:3;"><a href="#">Portfolio</a></li>
-            <li style="--i:2;"><a href="#">Our Team</a></li>
-            <li style="--i:1;"><a href="#">Contact</a></li>
-        </ul>
+        <section class="banner">
+            <div class="box content">
+                <header>
+                    <a href="#" class="logo">Hmm.</a>
+                    <ul>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </header>
+                <div class="contentBox">
+                    <h2>Souju's Website</h2>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi necessitatibus unde quas quibusdam alias voluptates? Assumenda dolorem amet ex enim quia dolor laboriosam temporibus necessitatibus?</p>
+                    <a href="#" class="btn">Read More</a>
+                </div>
+                <ul class="sci">
+                    <h3>Follow us on</h3>
+                    <li><a href="#"><img src="twitter.png"></a></li>
+                    <li><a href="#"><img src="instagram.png"></a></li>
+                </ul>
+
+
+            </div>
+            <div class="box images">
+                <div class="imgBx">
+                    <img src="img1.jpeg">
+                </div>
+                <div class="imgBx">
+                    <img src="img2.jpeg">
+                </div>
+                <div class="imgBx">
+                    <img src="img3.jpeg">
+                </div>
+            </div>
+        </section>
     </body>
 </html>
