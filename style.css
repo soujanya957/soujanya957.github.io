@@ -1,87 +1,91 @@
-@import url('https://fonts.googleapis.com/css?family=Oswald:400,700');
-*
-{
-   margin: 0;
-   padding: 0;
-   box-sizing: border-box;
-   font-family: 'Oswald', sans-serif; 
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;700&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Fira Code', monospace, sans-serif;
+
 }
-body {
+.banner {
+    position: relative;
+    height: 50vh;
+    top: 75px;
+    right: 250px;
+    padding-left: 45px;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    background: #434750;
-
 }
-
-ul{
+.banner .content {
     position: relative;
-    transform: skewY(-15deg);
+    max-width: 750px;
 }
-
-ul li {
+.banner .content p {
+    color: #000;
+    font-size: 18px;
+}
+.banner .content h2 {
+    font-weight: 10000;
+    font-size: 35px;
+}
+.navmenu {
     position: relative;
+    height: 50vh;
+    top: -250px;
+    left: -385px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.navmenu .menu ul {
+    display: flex;
+}
+.navmenu .menu ul li {
     list-style: none;
-    width: 200px;
-    background: #3e3f46;
-    padding: 15px;
-    z-index: var(--i);
-    transition: 0.5s;
-
+    margin-left: 50px;
 }
-
-ul li:hover {
-    background: #33a3ee;
-    transform: translateX(-50px);
+.navmenu .menu ul li a {
+    text-decoration: underline;
+    font-weight: 500;
+    color: #000;
+    letter-spacing: 1px;
 }
-
-
-ul li::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -40px;
-    width: 40px;
-    height: 100%;
-    background: #2e3133;
-    transform-origin: right;
-    transform: skewY(45deg);
-    transition: 0.5s;
+.navmenu .menu ul li a:hover {
+    text-decoration: none;
+    font-weight: 750;
+    color: #bdbdbd;
 }
-ul li:hover::before {
-    background: #1f5378;
+.main {
+    position: relative;
+    right: 75px;
+    bottom: 75px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-
-ul li::after {
-    content: '';
-    position: absolute;
-    top: -40px;
-    left: 0;
-    width: 100%;
-    height: 40px;
-    background: #35383e;
-    transform-origin: bottom;
-    transform: skewX(45deg);
-    transition: 0.5s;
+.links {
+    position: relative;
+    top: -925px;
+    left: 625px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-
-ul li:hover::after {
-    background: #1f5378;
+.links ul {
+    display: flex;
 }
-
-ul li a {
-   text-decoration: none;
-   color: #999; 
-   display: block;
-   text-transform: uppercase;
-   letter-spacing: 0.05em;
-   transition: 0.5s;
+.links ul li {
+    list-style: none;
+    margin-left: 50px;
 }
-ul li:hover a {
-    color: #fff;
+.links ul a{
+    text-decoration: underline;
+    font-weight: 500;
+    color: #000;
+    letter-spacing: 1px
 }
-
-ul li:last-child::after {
-    box-shadow: -120px 120px 20px rgba(0,0,0,0.25);;
+.links ul li a:hover {
+    text-decoration: none;
+    font-weight: 750;
+    color: #bdbdbd;
 }
