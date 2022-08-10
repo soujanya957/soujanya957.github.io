@@ -5,6 +5,51 @@
         <meta charset="UTF-8">
         <title>Souju's Website</title>
         <link rel="stylesheet" href="style.css">
+        <script>
+            let skillbtn = document.querySelector('.skill');
+            let skilldiv = document.querySelector('.skilldiv');
+
+            skillbtn.addEventListener('click', () =>{
+                if(skilldiv.style.display === 'none'){
+                    skilldiv.style.display = 'block';
+                }else{
+                    skilldiv.style.display = 'none';
+                }
+            })
+
+            let expbtn = document.querySelector('.exp');
+            let expdiv = document.querySelector('.expdiv');
+
+            expbtn.addEventListener('click', () =>{
+                if(expdiv.style.display === 'none'){
+                    expdiv.style.display = 'block';
+                }else{
+                    expdiv.style.display = 'none';
+                }
+            })
+
+            let projbtn = document.querySelector('.proj');
+            let projdiv = document.querySelector('.projdiv');
+
+            projbtn.addEventListener('click', () =>{
+                if(projdiv.style.display === 'none'){
+                    projdiv.style.display = 'block';
+                }else{
+                    projdiv.style.display = 'none';
+                }
+            })
+
+            let onbtn = document.querySelector('.on');
+            let ondiv = document.querySelector('.ondiv');
+
+            onbtn.addEventListener('click', () =>{
+                if(ondiv.style.display === 'none'){
+                    ondiv.style.display = 'block';
+                }else{
+                    ondiv.style.display = 'none';
+                }
+            })
+        </script>
     </head>
     <body>
         <!-- Banner -->
@@ -55,52 +100,5 @@
                 </li>
             </ul>
         </div>
-
-
-        <script>
-            let skillbtn = document.querySelector('.skill');
-            let skilldiv = document.querySelector('.skilldiv');
-
-            skillbtn.addEventListener('click', () =>{
-                if(skilldiv.style.display === 'none'){
-                    skilldiv.style.display = 'block';
-                }else{
-                    skilldiv.style.display = 'none';
-                }
-            })
-
-            let expbtn = document.querySelector('.exp');
-            let expdiv = document.querySelector('.expdiv');
-
-            expbtn.addEventListener('click', () =>{
-                if(expdiv.style.display === 'none'){
-                    expdiv.style.display = 'block';
-                }else{
-                    expdiv.style.display = 'none';
-                }
-            })
-
-            let projbtn = document.querySelector('.proj');
-            let projdiv = document.querySelector('.projdiv');
-
-            projbtn.addEventListener('click', () =>{
-                if(projdiv.style.display === 'none'){
-                    projdiv.style.display = 'block';
-                }else{
-                    projdiv.style.display = 'none';
-                }
-            })
-
-            let onbtn = document.querySelector('.on');
-            let ondiv = document.querySelector('.ondiv');
-
-            onbtn.addEventListener('click', () =>{
-                if(ondiv.style.display === 'none'){
-                    ondiv.style.display = 'block';
-                }else{
-                    ondiv.style.display = 'none';
-                }
-            })
-        </script>
     </body>
 </html>
