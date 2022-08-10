@@ -30,7 +30,7 @@
 }
 .main {
     position: absolute;
-    left: 75px;
+    right: 75px;
     bottom: 40px;
     z-index: 4;
     font-weight: 200;
