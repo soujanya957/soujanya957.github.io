@@ -22,27 +22,85 @@
                     qui ipsa ex. Lorem ipsum dolor sit amet consectetur   </p>
             </div>
         </div>
-        <div class="navmenu">
-            <div class="menu">
-                <ul>
-                    <li><a href="#">Skills</a></li>
-                    <li><a href="#">Experience</a></li>
-                    <li><a href="#">Projects</a></li>
-                    <li><a href="#">Ongoing</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="links">
-            <ul>
-                <li><a href="#">Resume</a></li>
-                <li><a href="https://github.com/soujanya957" target="_blank">GitHub</a></li>
-                <li><a href="https://www.linkedin.com/in/soujanya-c-aryal-70303a17a/" target="_blank">LinkedIn</a></li>
-                <li><a href="#">Email</a></li>
-            </ul>
-        </div>
-        <section class="main">
+        <section class="main"> 
             <p class="copyrightText">© Soujanya C. Aryal</p>
         </section>
-        
+
+        <div class="menu">
+            <ul>
+                <li><a href="#">Resume</a></li>
+                <li><a href="https://github.com/soujanya957">GitHub</a></li>
+                <li><a href="https://www.linkedin.com/in/soujanya-c-aryal-70303a17a/">LinkedIn</a></li>
+                <li><a href="mailto:soujanya.caryal@gmail.com" target="_blank">Email</a></li>
+            </ul>
+        </div>
+
+        <div class="contentlist">
+            <ul>
+                <li>
+                    <button class="skill">Skills</button>
+                    <div class="skilldiv" style="display:none">My skills.</div>
+                </li>
+                <li>
+                    <button class="exp">Experiences</button>
+                    <div class="expdiv" style="display:none">My experiences.</div>
+                </li>
+                <li>
+                    <button class="proj">Projects</button>
+                    <div class="projdiv" style="display:none">My projects.</div>
+                </li>
+                <li>
+                    <button class="on">Ongoing</button>
+                    <div class="ondiv" style="display:none">My ongoings.</div>
+                </li>
+            </ul>
+        </div>
+
+
+        <script>
+            let skillbtn = document.querySelector('.skill');
+            let skilldiv = document.querySelector('.skilldiv');
+
+            skillbtn.addEventListener('click', () =>{
+                if(skilldiv.style.display === 'none'){
+                    skilldiv.style.display = 'block';
+                }else{
+                    skilldiv.style.display = 'none';
+                }
+            })
+
+            let expbtn = document.querySelector('.exp');
+            let expdiv = document.querySelector('.expdiv');
+
+            expbtn.addEventListener('click', () =>{
+                if(expdiv.style.display === 'none'){
+                    expdiv.style.display = 'block';
+                }else{
+                    expdiv.style.display = 'none';
+                }
+            })
+
+            let projbtn = document.querySelector('.proj');
+            let projdiv = document.querySelector('.projdiv');
+
+            projbtn.addEventListener('click', () =>{
+                if(projdiv.style.display === 'none'){
+                    projdiv.style.display = 'block';
+                }else{
+                    projdiv.style.display = 'none';
+                }
+            })
+
+            let onbtn = document.querySelector('.on');
+            let ondiv = document.querySelector('.ondiv');
+
+            onbtn.addEventListener('click', () =>{
+                if(ondiv.style.display === 'none'){
+                    ondiv.style.display = 'block';
+                }else{
+                    ondiv.style.display = 'none';
+                }
+            })
+        </script>
     </body>
 </html>
