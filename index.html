@@ -1,104 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta charset="UTF-8">
-        <title>Souju's Website</title>
+        <title>Nav Bar</title>
         <link rel="stylesheet" href="style.css">
-        <script>
-            let skillbtn = document.querySelector('.skill');
-            let skilldiv = document.querySelector('.skilldiv');
-
-            skillbtn.addEventListener('click', () =>{
-                if(skilldiv.style.display === 'none'){
-                    skilldiv.style.display = 'block';
-                }else{
-                    skilldiv.style.display = 'none';
-                }
-            })
-
-            let expbtn = document.querySelector('.exp');
-            let expdiv = document.querySelector('.expdiv');
-
-            expbtn.addEventListener('click', () =>{
-                if(expdiv.style.display === 'none'){
-                    expdiv.style.display = 'block';
-                }else{
-                    expdiv.style.display = 'none';
-                }
-            })
-
-            let projbtn = document.querySelector('.proj');
-            let projdiv = document.querySelector('.projdiv');
-
-            projbtn.addEventListener('click', () =>{
-                if(projdiv.style.display === 'none'){
-                    projdiv.style.display = 'block';
-                }else{
-                    projdiv.style.display = 'none';
-                }
-            })
-
-            let onbtn = document.querySelector('.on');
-            let ondiv = document.querySelector('.ondiv');
-
-            onbtn.addEventListener('click', () =>{
-                if(ondiv.style.display === 'none'){
-                    ondiv.style.display = 'block';
-                }else{
-                    ondiv.style.display = 'none';
-                }
-            })
-        </script>
     </head>
     <body>
-        <!-- Banner -->
-        <div class="banner">
-            <header>
-                <!-- a href="#" class="logo">Brand Name</a> -->
-                <div class="toggle"></div>
-            </header>
-            <div class="content">
-                <h2>Soujanya's Website</h2>
-                <br>
-                <br>
-                <p> Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iste, voluptates sit, 
-                    cupiditate totam enim esse consequatur molestiae vitae, nihil saepe laborum ea 
-                    qui ipsa ex. Lorem ipsum dolor sit amet consectetur   </p>
-            </div>
-        </div>
-        <section class="main"> 
-            <p class="copyrightText">© Soujanya C. Aryal</p>
-        </section>
-
-        <div class="menu">
+        <header>
+            <a href="#" class="logo"></a>
             <ul>
                 <li><a href="#">Resume</a></li>
-                <li><a href="https://github.com/soujanya957">GitHub</a></li>
                 <li><a href="https://www.linkedin.com/in/soujanya-c-aryal-70303a17a/">LinkedIn</a></li>
+                <li><a href="https://github.com/soujanya957">GitHub</a></li>
                 <li><a href="mailto:soujanya.caryal@gmail.com" target="_blank">Email</a></li>
             </ul>
+        </header>
+        <section class="banner">
+        </section>
+        <h2 class="ttl">Soujanya C. Aryal</h2>
+        <div class="intro">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae odio perspiciatis
+            iste repellendus illo modi nam earum in! Quod similique alias, mollitia facere laborum delectus.</p>
         </div>
-
-        <div class="contentlist">
+        <div class="sections">
             <ul>
                 <li>
-                    <button class="skill">Skills</button>
-                    <div class="skilldiv" style="display:none">My skills.</div>
+                    <button class="btnone">Academics</button>
+                    <div class="divone" style="display:none">Academics stuff here.</div>
                 </li>
                 <li>
-                    <button class="exp">Experiences</button>
-                    <div class="expdiv" style="display:none">My experiences.</div>
+                    <button class="btntwo">Skills</button>
+                    <div class="divtwo" style="display:none">Skills here.</div>
                 </li>
                 <li>
-                    <button class="proj">Projects</button>
-                    <div class="projdiv" style="display:none">My projects.</div>
+                    <button class="btnthree">Experiences</button>
+                    <div class="divthree" style="display:none">Experiences here.</div>
                 </li>
                 <li>
-                    <button class="on">Ongoing</button>
-                    <div class="ondiv" style="display:none">My ongoings.</div>
+                    <button class="btnfour">Projects</button>
+                    <div class="divfour" style="display:none">Projects here.</div>
                 </li>
+
             </ul>
         </div>
+        
+        <script>
+            window.addEventListener("scroll", function () {
+                var header = document.querySelector("header");
+                header.classList.toggle("sticky", window.scrollY > 0);
+                var he = document.querySelector(".ttl");
+                he.classList.toggle("sticky", window.scrollY >150);
+            })
+
+            let btnone = document.querySelector('.btnone');
+            let divone = document.querySelector('.divone');
+
+            let btntwo = document.querySelector('.btntwo');
+            let divtwo = document.querySelector('.divtwo');
+
+            let btnthree = document.querySelector('.btnthree');
+            let divthree = document.querySelector('.divthree');
+
+            let btnfour = document.querySelector('.btnfour');
+            let divfour = document.querySelector('.divfour');
+
+
+            btnone.addEventListener('click', () =>{
+                if(divone.style.display === 'none'){
+                    divtwo.style.display = 'none';
+                    divthree.style.display = 'none';
+                    divfour.style.display = 'none';
+                    divone.style.display = 'block';
+
+                }else if (divone.style.display === 'block') {
+                    divone.style.display = 'none';
+                    divtwo.style.display = 'none';
+                    divthree.style.display = 'none';
+                    divfour.style.display = 'none';
+                }
+            })
+
+            btntwo.addEventListener('click', () =>{
+                if(divtwo.style.display === 'none'){
+                    divone.style.display = 'none';
+                    divthree.style.display = 'none';
+                    divfour.style.display = 'none';
+                    divtwo.style.display = 'block';
+                }else if (divtwo.style.display === 'block') {
+                    divone.style.display = 'none';
+                    divtwo.style.display = 'none';
+                    divthree.style.display = 'none';
+                    divfour.style.display = 'none';
+                }
+            })
+
+
+            btnthree.addEventListener('click', () =>{
+                if(divthree.style.display === 'none'){
+                    divone.style.display = 'none';
+                    divtwo.style.display = 'none';
+                    divfour.style.display = 'none';
+                    divthree.style.display = 'block';
+                }else if (divthree.style.display === 'block') {
+                    divone.style.display = 'none';
+                    divtwo.style.display = 'none';
+                    divthree.style.display = 'none';
+                    divfour.style.display = 'none';
+                }
+            })
+
+
+            btnfour.addEventListener('click', () =>{
+                if(divfour.style.display === 'none'){
+                    divone.style.display = 'none';
+                    divtwo.style.display = 'none';
+                    divthree.style.display = 'none';
+                    divfour.style.display = 'block';
+                }else if (divfour.style.display === 'block') {
+                    divone.style.display = 'none';
+                    divtwo.style.display = 'none';
+                    divthree.style.display = 'none';
+                    divfour.style.display = 'none';
+                }
+            })
+
+
+
+        </script>
     </body>
 </html>
