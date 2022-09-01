@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Souju's Website</title>
+        <title>Soujanya's Website</title>
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
@@ -43,86 +43,96 @@
 
             </ul>
         </div>
+        <div class="section1">
+            <ul>
+                <li>
+                    <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fphoto.php%3Ffbid%3D150547454164872%26set%3Da.114443844441900%26type%3D3&show_text=true&width=500" width="500" height="498" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+                </li>
+                <li>
+                    <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fphoto.php%3Ffbid%3D10167238236250001%26set%3Da.10153573038160001%26type%3D3&show_text=true&width=500" width="500" height="230" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+                </li>
+            </ul>
+        </div>
         
         <script>
             window.addEventListener("scroll", function () {
-                var header = document.querySelector("header");
-                header.classList.toggle("sticky", window.scrollY > 0);
-                var he = document.querySelector(".ttl");
-                he.classList.toggle("sticky", window.scrollY >150);
-            })
+            var header = document.querySelector("header");
+            header.classList.toggle("sticky", window.scrollY > 0);
+            var he = document.querySelector(".ttl");
+            he.classList.toggle("sticky", window.scrollY >150);
+        })
 
-            let btnone = document.querySelector('.btnone');
-            let divone = document.querySelector('.divone');
+        let btnone = document.querySelector('.btnone');
+        let divone = document.querySelector('.divone');
 
-            let btntwo = document.querySelector('.btntwo');
-            let divtwo = document.querySelector('.divtwo');
+        let btntwo = document.querySelector('.btntwo');
+        let divtwo = document.querySelector('.divtwo');
 
-            let btnthree = document.querySelector('.btnthree');
-            let divthree = document.querySelector('.divthree');
+        let btnthree = document.querySelector('.btnthree');
+        let divthree = document.querySelector('.divthree');
 
-            let btnfour = document.querySelector('.btnfour');
-            let divfour = document.querySelector('.divfour');
-
-
-            btnone.addEventListener('click', () =>{
-                if(divone.style.display === 'none'){
-                    divtwo.style.display = 'none';
-                    divthree.style.display = 'none';
-                    divfour.style.display = 'none';
-                    divone.style.display = 'block';
-
-                }else if (divone.style.display === 'block') {
-                    divone.style.display = 'none';
-                    divtwo.style.display = 'none';
-                    divthree.style.display = 'none';
-                    divfour.style.display = 'none';
-                }
-            })
-
-            btntwo.addEventListener('click', () =>{
-                if(divtwo.style.display === 'none'){
-                    divone.style.display = 'none';
-                    divthree.style.display = 'none';
-                    divfour.style.display = 'none';
-                    divtwo.style.display = 'block';
-                }else if (divtwo.style.display === 'block') {
-                    divone.style.display = 'none';
-                    divtwo.style.display = 'none';
-                    divthree.style.display = 'none';
-                    divfour.style.display = 'none';
-                }
-            })
+        let btnfour = document.querySelector('.btnfour');
+        let divfour = document.querySelector('.divfour');
 
 
-            btnthree.addEventListener('click', () =>{
-                if(divthree.style.display === 'none'){
-                    divone.style.display = 'none';
-                    divtwo.style.display = 'none';
-                    divfour.style.display = 'none';
-                    divthree.style.display = 'block';
-                }else if (divthree.style.display === 'block') {
-                    divone.style.display = 'none';
-                    divtwo.style.display = 'none';
-                    divthree.style.display = 'none';
-                    divfour.style.display = 'none';
-                }
-            })
+        btnone.addEventListener('click', () =>{
+            if(divone.style.display === 'none'){
+                divtwo.style.display = 'none';
+                divthree.style.display = 'none';
+                divfour.style.display = 'none';
+                divone.style.display = 'block';
+
+            }else if (divone.style.display === 'block') {
+                divone.style.display = 'none';
+                divtwo.style.display = 'none';
+                divthree.style.display = 'none';
+                divfour.style.display = 'none';
+            }
+        })
+
+        btntwo.addEventListener('click', () =>{
+            if(divtwo.style.display === 'none'){
+                divone.style.display = 'none';
+                divthree.style.display = 'none';
+                divfour.style.display = 'none';
+                divtwo.style.display = 'block';
+            }else if (divtwo.style.display === 'block') {
+                divone.style.display = 'none';
+                divtwo.style.display = 'none';
+                divthree.style.display = 'none';
+                divfour.style.display = 'none';
+            }
+        })
 
 
-            btnfour.addEventListener('click', () =>{
-                if(divfour.style.display === 'none'){
-                    divone.style.display = 'none';
-                    divtwo.style.display = 'none';
-                    divthree.style.display = 'none';
-                    divfour.style.display = 'block';
-                }else if (divfour.style.display === 'block') {
-                    divone.style.display = 'none';
-                    divtwo.style.display = 'none';
-                    divthree.style.display = 'none';
-                    divfour.style.display = 'none';
-                }
-            })
+        btnthree.addEventListener('click', () =>{
+            if(divthree.style.display === 'none'){
+                divone.style.display = 'none';
+                divtwo.style.display = 'none';
+                divfour.style.display = 'none';
+                divthree.style.display = 'block';
+            }else if (divthree.style.display === 'block') {
+                divone.style.display = 'none';
+                divtwo.style.display = 'none';
+                divthree.style.display = 'none';
+                divfour.style.display = 'none';
+            }
+        })
+
+
+        btnfour.addEventListener('click', () =>{
+            if(divfour.style.display === 'none'){
+                divone.style.display = 'none';
+                divtwo.style.display = 'none';
+                divthree.style.display = 'none';
+                divfour.style.display = 'block';
+            }else if (divfour.style.display === 'block') {
+                divone.style.display = 'none';
+                divtwo.style.display = 'none';
+                divthree.style.display = 'none';
+                divfour.style.display = 'none';
+            }
+        })
 
 
 
