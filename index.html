@@ -74,6 +74,9 @@
         let btnfour = document.querySelector('.btnfour');
         let divfour = document.querySelector('.divfour');
 
+        let embed = document.querySelector('.section1');
+
+
 
         btnone.addEventListener('click', () =>{
             if(divone.style.display === 'none'){
@@ -81,13 +84,36 @@
                 divthree.style.display = 'none';
                 divfour.style.display = 'none';
                 divone.style.display = 'block';
+                divone.classList.toggle("open");
+                
+                if (divtwo.classList.contains("open"))
+                {
+                    divtwo.classList.toggle("open");
+                }
+                if (divthree.classList.contains("open"))
+                {
+                    divthree.classList.toggle("open");
+                }
+                if (divfour.classList.contains("open")){
+                    divfour.classList.toggle("open");
+                }
 
             }else if (divone.style.display === 'block') {
                 divone.style.display = 'none';
                 divtwo.style.display = 'none';
                 divthree.style.display = 'none';
-                divfour.style.display = 'none';
+                divfour.style.display = 'none';  
+                divone.classList.toggle("open");
+                
+                
             }
+            if (divone.classList.contains("open") || divtwo.classList.contains("open") || divthree.classList.contains("open") || divfour.classList.contains("open")) {
+                embed.classList.add("active");
+            }
+            else {
+                embed.classList.remove("active");
+            }
+
         })
 
         btntwo.addEventListener('click', () =>{
@@ -96,11 +122,33 @@
                 divthree.style.display = 'none';
                 divfour.style.display = 'none';
                 divtwo.style.display = 'block';
+                divtwo.classList.toggle("open");
+                if (divone.classList.contains("open"))
+                {
+                    divone.classList.toggle("open");
+                }
+                if (divthree.classList.contains("open"))
+                {
+                    divthree.classList.toggle("open");
+                }
+                if (divfour.classList.contains("open")){
+                    divfour.classList.toggle("open");
+                }
+
+
             }else if (divtwo.style.display === 'block') {
                 divone.style.display = 'none';
                 divtwo.style.display = 'none';
                 divthree.style.display = 'none';
                 divfour.style.display = 'none';
+                divtwo.classList.toggle("open");
+                
+            }
+            if (divone.classList.contains("open") || divtwo.classList.contains("open") || divthree.classList.contains("open") || divfour.classList.contains("open")) {
+                embed.classList.add("active");
+            }
+            else {
+                embed.classList.remove("active");
             }
         })
 
@@ -111,31 +159,71 @@
                 divtwo.style.display = 'none';
                 divfour.style.display = 'none';
                 divthree.style.display = 'block';
-            }else if (divthree.style.display === 'block') {
-                divone.style.display = 'none';
-                divtwo.style.display = 'none';
-                divthree.style.display = 'none';
-                divfour.style.display = 'none';
-            }
-        })
+                divthree.classList.toggle("open");
+                
+        if (divtwo.classList.contains("open"))
+        {
+            divtwo.classList.toggle("open");
+        }
+        if (divone.classList.contains("open")){
+            divone.classList.toggle("open");
+        }
+        if (divfour.classList.contains("open")){
+            divfour.classList.toggle("open");
+        }
+        
 
 
-        btnfour.addEventListener('click', () =>{
-            if(divfour.style.display === 'none'){
-                divone.style.display = 'none';
-                divtwo.style.display = 'none';
-                divthree.style.display = 'none';
-                divfour.style.display = 'block';
-            }else if (divfour.style.display === 'block') {
-                divone.style.display = 'none';
-                divtwo.style.display = 'none';
-                divthree.style.display = 'none';
-                divfour.style.display = 'none';
-            }
-        })
+    }else if (divthree.style.display === 'block') {
+        divone.style.display = 'none';
+        divtwo.style.display = 'none';
+        divthree.style.display = 'none';
+        divfour.style.display = 'none';
+        divthree.classList.toggle("open");
+    }
+    if (divone.classList.contains("open") || divtwo.classList.contains("open") || divthree.classList.contains("open") || divfour.classList.contains("open")) {
+        embed.classList.add("active");
+    }
+    else {
+        embed.classList.remove("active");
+    }
+    
+})
 
 
+btnfour.addEventListener('click', () =>{
+    if(divfour.style.display === 'none'){
+        divone.style.display = 'none';
+        divtwo.style.display = 'none';
+        divthree.style.display = 'none';
+        divfour.style.display = 'block';
+        divfour.classList.toggle("open");
+        if (divtwo.classList.contains("open"))
+        {
+            divtwo.classList.toggle("open");
+        }
+        if (divone.classList.contains("open")){
+            divone.classList.toggle("open");
+        }
+        if (divthree.classList.contains("open")){
+            divthree.classList.toggle("open");
+        }
 
+    }else if (divfour.style.display === 'block') {
+        divone.style.display = 'none';
+        divtwo.style.display = 'none';
+        divthree.style.display = 'none';
+        divfour.style.display = 'none';
+        divfour.classList.toggle("open");
+    }
+    if (divone.classList.contains("open") || divtwo.classList.contains("open") || divthree.classList.contains("open") || divfour.classList.contains("open")) {
+        embed.classList.add("active");
+    }
+    else {
+        embed.classList.remove("active");
+    }
+}
+)
         </script>
     </body>
 </html>
