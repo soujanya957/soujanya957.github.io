@@ -5,12 +5,22 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Fira code', monospace, sans-serif;
+    font-family: 'Poppins', sans-serif;
+}
+html {
+    scroll-behavior: smooth;
 }
 body {
-    background-color:black;
+    background-color: #000;
     min-height: 150vh;
+
 }
+
+body.active {
+    min-height: 125vh;
+}
+
+/* ---------------------------- H E A D E R ------------------------------*/
 header {
     position: fixed;
     top: 0;
@@ -22,10 +32,12 @@ header {
     transition: 0.6s;
     z-index: 1000000;
     padding: 40px 100px;
+    transition: 0.5s;
+
 }
 header.sticky { 
     padding: 15px 100px;
-    background-color: #fff;
+    background-color: rgba(255,255,255, 0.7);
 }
 header .logo {
     position: relative;
@@ -50,52 +62,151 @@ header ul li a {
     position: relative;
     margin: 0 15px;
     text-decoration: none;
-    color: #fff;
+    color: #000;
     letter-spacing: 2px;
+    font-size: 18px;
     font-weight: 500px;
-    transform: 0.5s;
+    transition: 0.5s;
 }
-.banner {
-    position: relative;
-    width: 100%;
-    background-color:transparent;
-    min-height: 25vh;
+header ul li a:hover {
+    text-decoration: underline;
+}
+header.lot {
+    background-color: #fff;
 }
 header.sticky ul li a, header.sticky .logo {
     color: #000;
     font-size: 20px;
-    transition: 0.5s;
 
 }
-.ttl {
-    margin: 70px;
+/* ---------------------------- B A N N E R ------------------------------*/
+.banner {
+    position: relative;
+    width: 100%;
+    background-color: #fffbee;
+    min-height: 10vh;
+}
+/* ---------------------------- title section ------------------------------*/
+.title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 65vh;
+    background-color: #fffbee;
+}
+.title .souj h1 {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* -----*
+.title h2 {
+   position: relative;
+   font-size: 5vw;
+   color: #252839;
+   -webkit-text-stroke: 0.3vw #383d52;
+   text-transform: uppercase;
+}
+.title h2::before {
+   content: attr(data-text);
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 0;
+   height: 100%;
+   color: #01fe87;
+   -webkit-text-stroke: 0vw #383d52;
+   border-right: 2px solid #01fe87;
+   overflow: hidden;
+   animation: animate 6s ease-in-out infinite; 
+}
+@keyframes animate {
+   0%, 10%, 100% {
+       width: 0;
+   }
+   60%, 90% {
+       width: 100%
+   }
+}--- */
+
+.title p {
+
+    color: #000;
+}
+
+
+/*------------- another title -------------*/
+
+
+.souj {
+    position: relative;
+ }
+ .souj h2 {
+    position: absolute;
+    transform: translate(-50%,-50%);
+    font-size: 8em;
+ }
+ .souj h2:nth-child(1) {
+    color: transparent;
+    -webkit-text-stroke: 2px #03a9f4;
+ }
+
+ .souj h2:nth-child(2) {
+    color: #03a9f4;
+    animation: animate 4s ease-in-out infinite;
+ }
+ @keyframes animate {
+    0%, 100% {
+        clip-path: polygon(0% 42%, 13% 37%, 30% 40%, 39% 49%, 54% 59%, 68% 62%, 82% 61%, 100% 55%, 100% 100%, 0 100%);
+    }
+    50% {
+        clip-path: polygon(0% 52%, 10% 61%, 27% 63%, 41% 59%, 55% 47%, 73% 37%, 89% 37%, 100% 45%, 100% 100%, 0 100%);
+
+    }
+ }
+ /* ---------------------------- helo ------------------------------*/
+.helu {
+    position: relative;
+    min-height: 15vh;
+    background-color: #333;
     color: #fff;
-    font-size: 40px;
-    font-family: 'Fira Code';
+    padding: 35px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 1.1em;
+}
+/* ---------------------------- introduction ------------------------------*/
+.cli {
+    position: relative;
+    min-height: 20vh;
+    background-color: #252839;
+    color: #fff;
+}
+
+.sections {
+    margin-right: auto;
+    margin-left: auto;
     transition: 0.5s;
 }
-.ttl.sticky {
-    font-size: 35px;
-}
-.intro {
-    color: #fff;
-    margin-left: 70px;
-    width: 50%;
-    font-size: 18px;
-    font-family: 'Fira Code';
-}
-.sections {
-    margin: 30px;
+.sections.active {
+    height: 85vh;
 }
 .sections ul {
     position: relative;
-    display : flex;
-    justify-content: left;
+    padding-left: auto;
+    padding-right: auto;
+    display: inline-flex;
+    padding-top: calc(5% - 20px);
+    width: 100%;
+    justify-content: center;
     align-items: center;
+    z-index: 50000;
 }
 .sections ul li {
     position: relative;
     list-style: none;
+  
 }
 .sections ul li button {
     position: relative;
@@ -104,81 +215,277 @@ header.sticky ul li a, header.sticky .logo {
     color: #fff;
     letter-spacing: 2px;
     font-weight: 500px;
-    font-size: 18px;
+    font-size: 20px;
     padding: 9px 25px;
     background-color: transparent;
     border: none;
     cursor: pointer;
-    transition: all 0.3s ease 0s;
 }
 .sections ul li button:hover {
     text-decoration: underline;
     color: rgba(250,150,255, 0.2);
-    transition: 0.3s;
 }
 
 
 .divone, .divtwo, .divthree, .divfour {
+    margin-top: 50px;
+    margin-right: auto;
+    margin-left: auto;
     padding: 25px;
-    position: absolute;
-    display: flex;
+    position: relative;
     border: 1px solid #fff;
     color: #fff;
-    height: 350px;
-    width: 750px;
-    margin: 40px;
+    height: 600px;
+    width: 1000px;
+    overflow: scroll;
+    overflow-x: hidden;
 }
-.divtwo {
-    left: -195px;
-}
-.divthree {
-    left: -352px;
-}
-.divfour {
-    left: -573px;
-}
-.section1 {
+
+.divone ul, .divtwo ul, .divthree ul, .divfour ul {
     position: absolute;
-    top: 150px;
-    right: 0px;
-    height: 1000px;
-    margin: 25px;
-    padding: 25px;
-    width: 550px;
-    color: #999;
-    border: 1px solid #fff;
+    width: 100%;
+    display: inline-block;
 }
-.section1 ul {
+.divone ul li, .divtwo ul li, .divthree ul li, .divfour ul li {
+    list-style: none;
+    margin-bottom: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.divone ul li p, .divtwo ul li p, .divthree ul li p, .divfour ul li p {
+    padding-top: 10px;
+    margin-left: 15px;
+    padding-bottom: 10px;
+    font-size: 1.1em;
+}
+
+.divone ul li h3, .divtwo ul li h3, .divthree ul li h3, .divfour ul li h3 {
+    font-size: 18px;
+    font-weight: 500;
+    text-decoration: underline;
+}
+/* ---------------------------- embeds ------------------------------*/
+.emb {
     position: relative;
-    justify-content: left;
+    min-height: 45vh;
+    background-color: #333;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    padding: 25px;
+    display: flex;
+    overflow: scroll;
+}
+.embtitl {
+    position: relative;
+    min-height: 12vh;
+    background-color: #333;
+    color: #fff;
+    justify-content: center;
     align-items: center;
 }
-.section1 ul li {
+.embtitl h1 {
+    padding-top: 55px;
+    text-align: center;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+}
+.embtitl p {
+    text-align: center;
+    padding: 25px;
+}
+.emb ul {
+    position: relative;
+    width: 100%;
+    display: inline-flex;
+    justify-content: space-between;
+    padding-bottom: 20px;
+}
+.emb ul li {
     list-style: none;
-    padding-top: 15px;
+    margin-top: auto;
+    margin-bottom: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.emb ul li .ek {
+    height: 500px;
+}
+.emb ul li .ok {
+    height: 500px;
 }
 
+/* --------------- scroll bar -----------------------------*/
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
 
-@media (max-width: 1350px) {
-    .section1 {
-        position: relative;
-        left: 20%;
-        transition: 0.6s;
-    }
-    .section1.active {
-        margin-top: 350px;
-    }
-    .divone, .divtwo, .divthree, .divfour {
-        width: 400%;
-    }
-    
-    
+
+/* ---------------------------- Projects ------------------------------*/
+.projtitl {
+    position: relative;
+    min-height: 5vh;
+    background-color: #000;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    padding: 50px;
 }
-@media (max-width: 980px) {
-    .ttl {
-        font-size: 45px;
+.projtitl h1 {
+    text-align: center;
+}
+.projtitl p {
+    text-align: center;
+    padding: 25px;
+}
+.proj {
+    position: relative;
+    min-height: 45vh;
+    top: 0px;
+    background-color: #000;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    padding: 15px;
+    display: flex;
+    overflow: scroll;
+}
+.proj ul {
+    position: relative;
+    width: 100%;
+    display: inline-flex;
+    justify-content: space-between;
+    padding-bottom: 20px;
+}
+.proj ul li {
+    list-style: none;
+    margin-top: auto;
+    margin-bottom: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+
+}
+/*------------- S E C ------------ */
+.sec {
+    position: relative;
+    min-height: 25vh;
+    top: 0px;
+    background-color: #333;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    padding: 25px;
+
+}
+/* -------  F O O T E R  -------*/
+
+footer {
+    position: relative;
+    width: 100%;
+    background: #3586ff;
+    min-height: 100px;
+    padding: 20px 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+footer .social_icon, footer .menu {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 10px 0;
+}
+footer .social_icon li,  footer .menu li {
+    list-style: none;
+}
+footer .social_icon li a {
+    font-size: 2em;
+    color: #fff;
+    margin: 0 10px;
+    display: inline-block;
+    transition: 0.5s;
+}
+footer .social_icon li a:hover {
+    transform: translateY(-10px);
+}
+footer .menu li a {
+    font-size: 1.2em;
+    color: #fff;
+    margin: 0 10px;
+    display: inline-block;
+    text-decoration: none;
+    opacity: 0.75;
+}
+footer .menu li a:hover {
+    opacity: 1;
+}
+footer .wave {
+    position: absolute;
+    top: -100px;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: url(wave.png);
+    background-size: 1000px 100px;
+}
+footer .wave#wave1 {
+    z-index: 1000;
+    opacity: 1;
+    bottom: 0;
+    animation: animateWave 4s linear infinite;
+}
+@keyframes animateWave {
+    0% {
+        background-position-x: 1000px;
     }
-    .intro {
-        font-size: 23px;
+    100% {
+        background-position-x: 0px
     }
+}
+footer .wave#wave2 {
+    z-index: 999;
+    opacity: 0.5;
+    bottom: 10px;
+    animation: animateWave2 4s linear infinite;
+}
+@keyframes animateWave2 {
+    0% {
+        background-position-x: 0px;
+    }
+    100% {
+        background-position-x: 1000px
+    }
+}
+footer .wave#wave3 {
+    z-index: 1000;
+    opacity: 0.2;
+    bottom: 25px;
+    animation: animateWave 3s linear infinite;
+}
+footer .wave#wave4 {
+    z-index: 999;
+    opacity: 0.7;
+    bottom: 20px;
+    animation: animateWave2 3s linear infinite;
 }
