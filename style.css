@@ -11,7 +11,7 @@ html {
     scroll-behavior: smooth;
 }
 body {
-    background-color:#000;
+    background-color: #000;
     min-height: 150vh;
 
 }
@@ -174,7 +174,7 @@ header.sticky ul li a, header.sticky .logo {
     justify-content: center;
     align-items: center;
     text-align: center;
-    font-size: 1.1em;
+    font-size: 1em;
 }
 /* ---------------------------- introduction ------------------------------*/
 .cli {
@@ -190,18 +190,18 @@ header.sticky ul li a, header.sticky .logo {
     transition: 0.5s;
 }
 .sections.active {
-    height: 85vh;
+    height: 95vh;
 }
 .sections ul {
-    position: absolute;
+    position: relative;
     padding-left: auto;
     padding-right: auto;
     display: inline-flex;
-    top: calc(50% - 20px);
+    padding-top: calc(5% - 20px);
     width: 100%;
     justify-content: center;
     align-items: center;
-    z-index: 5;
+    z-index: 50000;
 }
 .sections ul li {
     position: relative;
@@ -225,21 +225,17 @@ header.sticky ul li a, header.sticky .logo {
     text-decoration: underline;
     color: rgba(250,150,255, 0.2);
 }
-
-
 .divone, .divtwo, .divthree, .divfour {
-    margin-top: 150px;
+    margin-top: 50px;
     margin-right: auto;
     margin-left: auto;
     padding: 25px;
     position: relative;
     border: 1px solid #fff;
     color: #fff;
-    height: 550px;
-    width: 950px;
+    height: 600px;
+    width: 85%;
     overflow: scroll;
-    overflow-x: hidden;
-
 }
 
 .divone ul, .divtwo ul, .divthree ul, .divfour ul {
@@ -247,9 +243,9 @@ header.sticky ul li a, header.sticky .logo {
     width: 100%;
     display: inline-block;
 }
+
 .divone ul li, .divtwo ul li, .divthree ul li, .divfour ul li {
     list-style: none;
-
     margin-bottom: auto;
     padding-left: 20px;
     padding-right: 20px;
@@ -259,13 +255,17 @@ header.sticky ul li a, header.sticky .logo {
     padding-top: 10px;
     margin-left: 15px;
     padding-bottom: 10px;
-    font-size: 1.1em;
+    font-size: 1em;
 }
 
 .divone ul li h3, .divtwo ul li h3, .divthree ul li h3, .divfour ul li h3 {
     font-size: 18px;
     font-weight: 500;
     text-decoration: underline;
+}
+.divone ul li a, .divtwo ul li a, .divthree ul li a, .divfour ul li a {
+    text-decoration: underline;
+    color: pink;
 }
 /* ---------------------------- embeds ------------------------------*/
 .emb {
@@ -296,6 +296,7 @@ header.sticky ul li a, header.sticky .logo {
 }
 .embtitl p {
     text-align: center;
+    font-size: 1em;
     padding: 25px;
 }
 .emb ul {
@@ -357,6 +358,8 @@ header.sticky ul li a, header.sticky .logo {
 .projtitl p {
     text-align: center;
     padding: 25px;
+    font-size: 1.1em;
+
 }
 .proj {
     position: relative;
@@ -386,15 +389,216 @@ header.sticky ul li a, header.sticky .logo {
 
 }
 /*------------- S E C ------------ */
-.sec {
+
+.sectitl {
     position: relative;
-    min-height: 25vh;
-    top: 0px;
-    background-color: #333;
+    min-height: 5vh;
+    background-color: #000;
     justify-content: center;
     align-items: center;
     color: #fff;
+    padding: 50px;
+}
+.sectitl h1 {
+    text-align: center;
+}
+.sectitl p {
+    text-align: center;
     padding: 25px;
+    font-size: 1.1em;
 
 }
-/* ------- D I V  C O N T E N T -------*/
+.sec {
+    position: relative;
+    min-height: 45vh;
+    top: 0px;
+    background-color: #000;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    padding: 15px;
+    display: flex;
+    overflow: scroll;
+}
+.sec ul {
+    position: relative;
+    width: 100%;
+    display: inline-flex;
+    justify-content: space-between;
+    padding-bottom: 20px;
+}
+.sec ul li {
+    list-style: none;
+    margin-top: auto;
+    margin-bottom: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.sec ul li p {
+    text-decoration: none;
+}
+.empt {
+
+    position: relative;
+    min-height: 45vh;
+    top: 0px;
+    background-color: #000;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    padding: 15px;
+    display: flex;
+    overflow: scroll;
+}
+/* -------  F O O T E R  -------*/
+
+footer {
+    position: relative;
+    width: 100%;
+    background: #3586ff;
+    min-height: 140px;
+    padding: 20px 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+footer .social_icon, footer .menu {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 10px 0;
+}
+footer .social_icon li,  footer .menu li {
+    list-style: none;
+}
+footer .social_icon li a {
+    font-size: 2em;
+    color: #fff;
+    margin: 0 10px;
+    display: inline-block;
+    transition: 0.5s;
+}
+footer .social_icon li a:hover {
+    transform: translateY(-10px);
+}
+footer .menu li a {
+    font-size: 1.2em;
+    color: #fff;
+    margin: 0 10px;
+    display: inline-block;
+    text-decoration: none;
+    opacity: 0.75;
+}
+footer .menu li a:hover {
+    opacity: 1;
+}
+footer .wave {
+    position: absolute;
+    top: -100px;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: url(wave.png);
+    background-size: 1000px 100px;
+}
+footer .wave#wave1 {
+    z-index: 1000;
+    opacity: 1;
+    bottom: 0;
+    animation: animateWave 4s linear infinite;
+}
+@keyframes animateWave {
+    0% {
+        background-position-x: 1000px;
+    }
+    100% {
+        background-position-x: 0px
+    }
+}
+footer .wave#wave2 {
+    z-index: 999;
+    opacity: 0.5;
+    bottom: 10px;
+    animation: animateWave2 4s linear infinite;
+}
+@keyframes animateWave2 {
+    0% {
+        background-position-x: 0px;
+    }
+    100% {
+        background-position-x: 1000px
+    }
+}
+footer .wave#wave3 {
+    z-index: 1000;
+    opacity: 0.2;
+    bottom: 25px;
+    animation: animateWave 3s linear infinite;
+}
+footer .wave#wave4 {
+    z-index: 999;
+    opacity: 0.7;
+    bottom: 20px;
+    animation: animateWave2 3s linear infinite;
+}
+
+/* R E S P O N S I V E */
+@media (max-width: 750px) {
+    .sections.active {
+        height: 35vh;
+    }
+}
+@media (max-width: 1250px){
+    .divone, .divtwo, .divthree, .divfour {
+        height: 450px;
+    }
+}
+@media (max-width: 808px) {
+    header ul li a {
+        font-size: 14px;
+    }
+}
+@media (max-width: 694px) {
+    header ul li a {
+        font-size: 12px;
+    }
+}
+
+@media only screen and (max-device-width: 520px) {
+    .title {
+            min-height: 25vh;
+        }
+}
+@media only screen and (max-device-width: 520px) {
+    .helu {
+        min-height: 10vh;
+        font-size: 16px;
+    }
+    .cli {
+       min-height: 125px;
+    }
+    .empt {
+        min-height: 20vh;
+    }
+    .divone, .divtwo, .divthree, .divfour {
+        height: 450px;
+    }
+
+    .sections.active {
+        height: 45vh;
+    }
+    .emb, .proj, .sec{
+        min-height: 35vh;
+    }
+    .embtitl, .projtitl, .sectitl {
+        min-height: 8vh;
+    }
+}
+@media only screen and (max-device-width: 806px) {
+    .helu {
+        display: none;
+    }
+}
