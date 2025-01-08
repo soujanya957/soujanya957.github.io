@@ -1,0 +1,34 @@
+/* src/components/Loading.css */
+
+@keyframes fill {
+    0% {
+      width: 0%; /* Start with no width */
+    }
+    100% {
+      width: 100%; /* Fill to full width */
+    }
+  }
+  
+  .loading-bar {
+    width: 100%; /* Full width */
+    max-width: 28rem; /* Adjust according to your design */
+    height: 3rem; /* Height of the loading bar */
+    border: 2px solid black; /* Black outline */
+    background-color: transparent; /* No background color */
+    position: relative; /* For positioning the progress */
+    overflow: hidden; /* Hide overflowing elements */
+  }
+  
+  .loading-progress {
+    position: absolute; /* Positioning for filling */
+    top: 0; /* Start filling from the top */
+    left: 0; /* Start from the left */
+    height: 100%; /* Full height */
+    background-color: black; /* Fill color */
+    animation: fill 1.5s linear forwards; /* Animation duration set to 1.5 seconds */
+  }
+  
+  .text-gray-800 {
+    color: #1f2937; /* Dark gray text color for "Loading..." */
+  }
+  
