@@ -2,7 +2,7 @@
   "name": "portfolio-website",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://soujanya957.github.io/",
+  "homepage": "https://soujanya957.github.io/soujanya957.github.io",
   "dependencies": {
     "@material-ui/core": "^4.12.4",
     "@react-three/drei": "^9.120.5",
