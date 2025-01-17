@@ -81,7 +81,7 @@ const Home = () => {
             <div className="flex gap-4">
               {[
                 { text: 'GitHub', url: 'https://github.com/soujanya957', key: 'github' },
-                { text: 'LinkedIn', url: 'https://linkedin.com/in/soujanya_c_aryal/', key: 'linkedin' }
+                { text: 'LinkedIn', url: 'https://linkedin.com/in/soujanya-c-aryal/', key: 'linkedin' }
               ].map((link) => (
                 <button
                   key={link.key}
