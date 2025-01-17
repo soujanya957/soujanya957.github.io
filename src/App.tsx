@@ -6,6 +6,8 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Projects from './pages/Projects';
 import Loading from './components/Loading';
+import NavigationPad from './pages/NavigationPad';
+import TerminalToggle from './pages/TerminalToggle';
 
 function App() {
   const location = useLocation(); // Get the current location
@@ -31,6 +33,8 @@ function App() {
       ) : (
         <>
           <Navbar hidden={location.pathname === '/'} /> {/* Hide Navbar on main page */}
+            <TerminalToggle /> {/* Terminal Toggle */}
+            <NavigationPad /> {/* Navigation Pad */}
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
