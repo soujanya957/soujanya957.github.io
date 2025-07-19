@@ -1,7 +1,6 @@
 import React from 'react';
 import ProjectCard from './ProjectCard';
 import { projects } from './projects_mod';
-import ScrollDial from './ScrollWheel';
 
 const Projects: React.FC = () => {
   return (
@@ -10,7 +9,6 @@ const Projects: React.FC = () => {
         <h2 className="text-4xl font-bold font-mono border-b-4 border-black pb-4 mb-12">
           My Projects
         </h2>
-        <ScrollDial />
         {projects.map((project, index) => (
           <ProjectCard key={index} project={project} />
         ))}

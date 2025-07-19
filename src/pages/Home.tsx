@@ -1,23 +1,38 @@
 // src/pages/Home.tsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import RightSection from './RightSection'; // Import the new component
+import RightSection from './RightSection';
+import RoboticArm2D from '../components/RoboticArm2D';
 
 const Home = () => {
   const navigate = useNavigate();
-  const [hoverText, setHoverText] = useState('');
-  const [boxColors, setBoxColors] = useState(Array(36).fill('#ffffff')); // Initialize boxes with white color
+  const [boxColors, setBoxColors] = useState(Array(36).fill('#ffffff'));
+  const [mouseDown, setMouseDown] = useState(false);
 
+  // Responsive arm base positions and a key to force remount
+  const [viewport, setViewport] = useState({ width: window.innerWidth, height: window.innerHeight });
+  const [armKey, setArmKey] = useState(0);
+
+  useEffect(() => {
+    const onResize = () => {
+      setViewport({ width: window.innerWidth, height: window.innerHeight });
+      setArmKey(k => k + 1); // force remount of arms
+    };
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
+  // Navigation
   const handleNavigation = (path: string) => {
     navigate(path);
   };
 
-  // Function to clear all colors
+  // Clear all box colors
   const clearColors = () => {
     setBoxColors(Array(36).fill('#ffffff'));
   };
 
-  // Interactive cursor effect
+  // Move custom cursor
   const handleMouseMove = (e: React.MouseEvent) => {
     const cursor = document.getElementById('custom-cursor');
     if (cursor) {
@@ -26,15 +41,44 @@ const Home = () => {
     }
   };
 
+  // Handle mouse down/up for cursor fill
+  const handleMouseDown = () => setMouseDown(true);
+  const handleMouseUp = () => setMouseDown(false);
+
+  // Arm base positions (first and third quarter)
+  const margin = 60;
+  const leftBase = { x: viewport.width * 0.25, y: viewport.height - margin };
+  const rightBase = { x: viewport.width * 0.75, y: viewport.height - margin };
+
+  const armLength = 140;
+  // Lower the end effector by using a shallower angle
+  // Left arm: 55deg (less up, more out)
+  const leftAngle = (35 * Math.PI) / 180;
+  const leftDefault = {
+    x: leftBase.x + armLength * Math.cos(leftAngle),
+    y: leftBase.y - armLength * Math.sin(leftAngle),
+  };
+  // Right arm: 125deg (less up, more out)
+  const rightAngle = (35 * Math.PI) / 180;
+  const rightDefault = {
+    x: rightBase.x - armLength * Math.cos(rightAngle),
+    y: rightBase.y - armLength * Math.sin(rightAngle),
+  };
+
   return (
     <div
-      className="min-h-screen pt-16 bg-white relative overflow-hidden"
+      className="min-h-screen pt-16 bg-white relative overflow-hidden flex flex-col"
       onMouseMove={handleMouseMove}
+      onMouseDown={handleMouseDown}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseUp}
     >
       {/* Custom cursor follower */}
       <div
         id="custom-cursor"
-        className="fixed w-4 h-4 border-2 border-black pointer-events-none transition-all duration-75 -translate-x-1/2 -translate-y-1/2 z-50"
+        className={`fixed w-4 h-4 border-2 border-black pointer-events-none transition-all duration-75 -translate-x-1/2 -translate-y-1/2 z-50
+          ${mouseDown ? 'bg-black' : 'bg-transparent'}
+        `}
       />
 
       {/* Background grid */}
@@ -44,15 +88,11 @@ const Home = () => {
         ))}
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 relative">
+      <div className="flex-1 max-w-6xl mx-auto px-4 relative w-full">
         <div className="flex flex-col md:flex-row items-center justify-between py-12">
           {/* Left Section */}
           <div className="md:w-1/2 space-y-8 relative">
-            <div
-              className="space-y-4 transition-transform hover:translate-x-2"
-              onMouseEnter={() => setHoverText('hi')}
-              onMouseLeave={() => setHoverText('')}
-            >
+            <div className="space-y-4 transition-transform hover:translate-x-2">
               <h1 className="text-5xl font-bold font-mono">
                 Hi, I'm <span className="underline decoration-4">Soujanya</span>
               </h1>
@@ -104,12 +144,67 @@ const Home = () => {
             </div>
           </div>
 
-          {/* Right Section - using the new RightSection component */}
+          {/* Right Section */}
           <RightSection 
             boxColors={boxColors} 
             setBoxColors={setBoxColors} 
             clearColors={clearColors} 
           />
+        </div>
+      </div>
+
+      {/* Two Robotic Arms and Centered Text */}
+      <div
+        style={{
+          position: 'fixed',
+          left: 0,
+          bottom: 0,
+          width: '100vw',
+          pointerEvents: 'none',
+          zIndex: 20,
+        }}
+      >
+        {/* Left Arm */}
+        <RoboticArm2D
+          key={`left-${armKey}`}
+          base={leftBase}
+          endEffectorColor="#f59e42"
+          controlKeys="wasd"
+          bendDirection="right"
+          defaultTarget={leftDefault}
+        />
+        {/* Right Arm */}
+        <RoboticArm2D
+          key={`right-${armKey}`}
+          base={rightBase}
+          endEffectorColor="#3b82f6"
+          controlKeys="arrows"
+          bendDirection="left"
+          defaultTarget={rightDefault}
+        />
+        {/* Centered text and key guides */}
+        <div
+          style={{
+            position: 'absolute',
+            left: '50%',
+            bottom: 40,
+            transform: 'translateX(-50%)',
+            pointerEvents: 'auto',
+            background: 'rgba(255,255,255,0.85)',
+            borderRadius: 6,
+            padding: '6px 14px',
+            fontFamily: 'monospace',
+            fontSize: 13,
+            fontWeight: 500,
+            color: '#374151',
+            textAlign: 'center',
+            minWidth: 180,
+          }}
+        >
+          <b>Try moving both arms!</b>
+          <div style={{ marginTop: 6, fontSize: 12, color: '#888' }}>
+            Left: WASD &nbsp;|&nbsp; Right: Arrow Keys
+          </div>
         </div>
       </div>
     </div>
