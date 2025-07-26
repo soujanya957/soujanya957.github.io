@@ -31,7 +31,7 @@ function getIK(
     x: base.x + L1 * Math.cos(theta1) + L2 * Math.cos(theta1 + theta2),
     y: base.y + L1 * Math.sin(theta1) + L2 * Math.sin(theta1 + theta2),
   };
-  return { theta1, theta2, effector };
+  return { theta2, theta3, effector };
 }
 
 interface RoboticArm2DProps {
@@ -40,11 +40,13 @@ interface RoboticArm2DProps {
   controlKeys: 'wasd' | 'arrows';
   bendDirection?: 'left' | 'right';
   defaultTarget?: { x: number; y: number };
+  onEndEffectorMove?: (pos: { x: number; y: number }) => void;
+  onGripChange?: (gripping: boolean) => void;
 }
 
 const keyMap = {
-  wasd: { up: 'w', down: 's', left: 'a', right: 'd' },
-  arrows: { up: 'ArrowUp', down: 'ArrowDown', left: 'ArrowLeft', right: 'ArrowRight' },
+  wasd: { up: 'w', down: 's', left: 'a', right: 'd', grip: 'x' },
+  arrows: { up: 'ArrowUp', down: 'ArrowDown', left: 'ArrowLeft', right: 'ArrowRight', grip: 'y' },
 };
 
 const RoboticArm2D: React.FC<RoboticArm2DProps> = ({
@@ -53,22 +55,30 @@ const RoboticArm2D: React.FC<RoboticArm2DProps> = ({
   controlKeys,
   bendDirection = 'right',
   defaultTarget,
+  onEndEffectorMove,
+  onGripChange,
 }) => {
   const [target, setTarget] = useState(
     defaultTarget || { x: base.x + 80, y: base.y - 40 }
   );
   const [dragging, setDragging] = useState(false);
+  const [gripping, setGripping] = useState(false);
   const svgRef = useRef<SVGSVGElement>(null);
 
   // Track which keys are held down
   const heldKeys = useRef<{ [key: string]: boolean }>({});
 
-  // Multi-key movement effect
+  // Multi-key movement effect and grip
   useEffect(() => {
     let interval: NodeJS.Timeout | null = null;
 
     const handleKeyDown = (e: KeyboardEvent) => {
       heldKeys.current[e.key] = true;
+      // Grip logic
+      if (e.key === keyMap[controlKeys].grip) {
+        setGripping(true);
+        if (onGripChange) onGripChange(true);
+      }
       if (!interval) {
         interval = setInterval(() => {
           setTarget((prev) => {
@@ -87,6 +97,11 @@ const RoboticArm2D: React.FC<RoboticArm2DProps> = ({
 
     const handleKeyUp = (e: KeyboardEvent) => {
       heldKeys.current[e.key] = false;
+      // Release grip
+      if (e.key === keyMap[controlKeys].grip) {
+        setGripping(false);
+        if (onGripChange) onGripChange(false);
+      }
       // If no movement keys are held, clear interval
       const map = keyMap[controlKeys];
       if (
@@ -108,7 +123,7 @@ const RoboticArm2D: React.FC<RoboticArm2DProps> = ({
       window.removeEventListener('keyup', handleKeyUp);
       if (interval) clearInterval(interval);
     };
-  }, [controlKeys]);
+  }, [controlKeys, onGripChange]);
 
   // Prevent text selection while dragging
   useEffect(() => {
@@ -159,8 +174,8 @@ const RoboticArm2D: React.FC<RoboticArm2DProps> = ({
 
   // Claw: two pincers at an angle, with a small gap
   const clawLength = 18;
-  const clawAngle = Math.PI / 7;
-  const clawGap = 0.18;
+  const clawAngle = gripping ? Math.PI / 18 : Math.PI / 7;
+  const clawGap = gripping ? 0.05 : 0.18;
   const claw1 = {
     x: effector.x + clawLength * Math.cos(theta1 + theta2 + clawAngle + clawGap),
     y: effector.y + clawLength * Math.sin(theta1 + theta2 + clawAngle + clawGap),
@@ -173,6 +188,14 @@ const RoboticArm2D: React.FC<RoboticArm2DProps> = ({
   // SVG size
   const width = window.innerWidth;
   const height = window.innerHeight;
+
+  // Notify parent of effector position
+  useEffect(() => {
+    if (typeof onEndEffectorMove === 'function') {
+      onEndEffectorMove(effector);
+    }
+    // eslint-disable-next-line
+  }, [effector.x, effector.y]);
 
   return (
     <svg

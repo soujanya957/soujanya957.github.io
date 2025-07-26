@@ -1,13 +1,18 @@
 // src/pages/Home.tsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import RightSection from './RightSection';
 import RoboticArm2D from '../components/RoboticArm2D';
+import AnimatedButtonRow from '../components/AnimatedButtonRow';
+import ArmInteractiveButton from '../components/ArmInteractiveButton';
+import GrabbableBall from '../components/GrabbableBall';
 
 const Home = () => {
   const navigate = useNavigate();
-  const [boxColors, setBoxColors] = useState(Array(36).fill('#ffffff'));
   const [mouseDown, setMouseDown] = useState(false);
+  const [leftArmEffector, setLeftArmEffector] = useState<{ x: number; y: number } | null>(null);
+  const [rightArmEffector, setRightArmEffector] = useState<{ x: number; y: number } | null>(null);
+  const [leftGripping, setLeftGripping] = useState(false);
+  const [rightGripping, setRightGripping] = useState(false);
 
   // Responsive arm base positions and a key to force remount
   const [viewport, setViewport] = useState({ width: window.innerWidth, height: window.innerHeight });
@@ -25,11 +30,6 @@ const Home = () => {
   // Navigation
   const handleNavigation = (path: string) => {
     navigate(path);
-  };
-
-  // Clear all box colors
-  const clearColors = () => {
-    setBoxColors(Array(36).fill('#ffffff'));
   };
 
   // Move custom cursor
@@ -65,6 +65,12 @@ const Home = () => {
     y: rightBase.y - armLength * Math.sin(rightAngle),
   };
 
+  // Ball start position: horizontally centered, just above the "ground"
+  const ballStart = {
+    x: viewport.width / 2,
+    y: viewport.height - margin - 48, // 48 is ball diameter
+  };
+
   return (
     <div
       className="min-h-screen pt-16 bg-white relative overflow-hidden flex flex-col"
@@ -88,11 +94,26 @@ const Home = () => {
         ))}
       </div>
 
+
+      {/* "Ground" line at the base of the arms */}
+      <div
+        style={{
+          position: 'fixed',
+          left: 0,
+          width: '100vw',
+          height: 0,
+          bottom: margin - 2,
+          borderBottom: '4px solid #222',
+          zIndex: 15,
+          pointerEvents: 'none',
+        }}
+      />
+
       <div className="flex-1 max-w-6xl mx-auto px-4 relative w-full">
         <div className="flex flex-col md:flex-row items-center justify-between py-12">
           {/* Left Section */}
-          <div className="md:w-1/2 space-y-8 relative">
-            <div className="space-y-4 transition-transform hover:translate-x-2">
+          <div className="md:w-1/2 space-y-6 relative">
+            <div className="space-y-2 transition-transform hover:translate-x-2 mt-2">
               <h1 className="text-5xl font-bold font-mono">
                 Hi, I'm <span className="underline decoration-4">Soujanya</span>
               </h1>
@@ -102,54 +123,40 @@ const Home = () => {
             </div>
 
             {/* Navigation Buttons */}
-            <div className="flex flex-wrap gap-4">
-              {[
-                { text: 'View Projects', path: '/projects', key: 'projects' },
-                { text: 'About Me', path: '/about', key: 'about' }
-              ].map((button) => (
-                <button
-                  key={button.key}
-                  onClick={() => handleNavigation(button.path)}
-                  className="group relative px-6 py-3 border-2 border-black font-mono bg-white hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all"
-                >
-                  {button.text}
-                </button>
-              ))}
-            </div>
+            <AnimatedButtonRow
+              buttons={[
+                { text: 'View Projects', key: 'projects', onClick: () => handleNavigation('/projects') },
+                { text: 'About Me', key: 'about', onClick: () => handleNavigation('/about') }
+              ]}
+            />
 
             {/* Social Links */}
-            <div className="flex gap-4">
-              {[
-                { text: 'GitHub', url: 'https://github.com/soujanya957', key: 'github' },
-                { text: 'LinkedIn', url: 'https://linkedin.com/in/soujanya-c-aryal/', key: 'linkedin' }
-              ].map((link) => (
-                <button
-                  key={link.key}
-                  onClick={() => window.open(link.url, '_blank', 'noopener noreferrer')}
-                  className="group relative p-3 border-2 border-black font-mono hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all"
-                >
-                  {link.text}
-                </button>
-              ))}
-            </div>
+            <AnimatedButtonRow
+              buttons={[
+                { text: 'GitHub', key: 'github', onClick: () => window.open('https://github.com/soujanya957', '_blank', 'noopener noreferrer') },
+                { text: 'LinkedIn', key: 'linkedin', onClick: () => window.open('https://linkedin.com/in/soujanya-c-aryal/', '_blank', 'noopener noreferrer') }
+              ]}
+            />
 
-            {/* Contact Section */}
-            <div className="pt-4">
+            {/* Contact Section with ArmInteractiveButton */}
+            <div className="pt-4 flex items-center gap-3">
               <a
                 href="mailto:soujanya@brown.edu"
                 className="group relative inline-block px-4 py-2 border-2 border-black font-mono hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all"
               >
                 soujanya@brown.edu
               </a>
+              <ArmInteractiveButton
+                armPositions={[
+                  ...(leftArmEffector ? [leftArmEffector] : []),
+                  ...(rightArmEffector ? [rightArmEffector] : []),
+                ]}
+                onClick={() => alert('Robotic arm interacted!')}
+              >
+                🤖 Arm Button
+              </ArmInteractiveButton>
             </div>
           </div>
-
-          {/* Right Section */}
-          <RightSection 
-            boxColors={boxColors} 
-            setBoxColors={setBoxColors} 
-            clearColors={clearColors} 
-          />
         </div>
       </div>
 
@@ -172,6 +179,8 @@ const Home = () => {
           controlKeys="wasd"
           bendDirection="right"
           defaultTarget={leftDefault}
+          onEndEffectorMove={setLeftArmEffector}
+          onGripChange={setLeftGripping}
         />
         {/* Right Arm */}
         <RoboticArm2D
@@ -181,6 +190,8 @@ const Home = () => {
           controlKeys="arrows"
           bendDirection="left"
           defaultTarget={rightDefault}
+          onEndEffectorMove={setRightArmEffector}
+          onGripChange={setRightGripping}
         />
         {/* Centered text and key guides */}
         <div
