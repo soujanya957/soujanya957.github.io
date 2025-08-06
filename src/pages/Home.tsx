@@ -99,32 +99,31 @@ const Home = () => {
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseUp}
     >
-      {/* Cool Startup Animations - Black & White Style */}
+      {/* Simple Clean Animations */}
       <style>{`
-        @keyframes cinematicSlideDown {
+        @keyframes fadeSlideDown {
           0% { 
             opacity: 0; 
-            transform: translateY(-200px) scale(0.8);
-            filter: blur(10px);
-          }
-          30% { 
-            opacity: 0.3; 
-            transform: translateY(-50px) scale(0.95);
-            filter: blur(5px);
-          }
-          70% { 
-            opacity: 0.8; 
-            transform: translateY(15px) scale(1.05);
-            filter: blur(1px);
+            transform: translateY(-30px);
           }
           100% { 
             opacity: 1; 
-            transform: translateY(0) scale(1);
-            filter: blur(0px);
+            transform: translateY(0);
           }
         }
 
-        @keyframes dramaticTypewriter {
+        @keyframes fadeSlideUp {
+          0% { 
+            opacity: 0; 
+            transform: translateY(20px);
+          }
+          100% { 
+            opacity: 1; 
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes typewriter {
           0% { 
             width: 0;
             opacity: 0;
@@ -138,92 +137,48 @@ const Home = () => {
           }
         }
 
-        @keyframes smoothSlideUp {
-          0% { 
-            opacity: 0; 
-            transform: translateY(60px) scale(0.9);
-          }
-          60% { 
-            opacity: 1; 
-            transform: translateY(-8px) scale(1.02);
-          }
-          100% { 
-            opacity: 1; 
-            transform: translateY(0) scale(1);
-          }
-        }
-
-        @keyframes staggeredFadeIn {
-          0% { 
-            opacity: 0; 
-            transform: translateY(40px) translateX(-20px) rotate(-2deg);
-          }
-          70% { 
-            opacity: 1; 
-            transform: translateY(-5px) translateX(3px) rotate(1deg);
-          }
-          100% { 
-            opacity: 1; 
-            transform: translateY(0) translateX(0) rotate(0deg);
-          }
-        }
-
-        @keyframes elegantUnderlineGrow {
+        @keyframes underlineGrow {
           0% { 
             width: 0; 
             opacity: 0;
-            transform: scaleX(0);
           }
           30% { 
             opacity: 1;
           }
-          70% { 
-            width: 95%; 
-            transform: scaleX(0.95);
-          }
           100% { 
             width: 100%; 
-            transform: scaleX(1);
-          }
-        }
-
-        @keyframes gentleFloat {
-          0%, 100% { 
-            transform: translateY(0px);
-          }
-          50% { 
-            transform: translateY(-8px);
+            opacity: 1;
           }
         }
 
         .animate-title {
-          animation: cinematicSlideDown 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s forwards;
+          animation: fadeSlideDown 1s ease-out 0.3s forwards;
         }
         
         .animate-subtitle {
-          animation: smoothSlideUp 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.8s forwards;
+          animation: fadeSlideUp 0.8s ease-out 0.8s forwards;
         }
         
         .animate-buttons {
-          animation: staggeredFadeIn 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.2s forwards;
+          animation: fadeSlideUp 0.8s ease-out 1.2s forwards;
         }
         
         .animate-social {
-          animation: staggeredFadeIn 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.5s forwards;
+          animation: fadeSlideUp 0.8s ease-out 1.5s forwards;
         }
         
         .animate-contact {
-          animation: staggeredFadeIn 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.8s forwards;
+          animation: fadeSlideUp 0.8s ease-out 1.8s forwards;
         }
 
         .animate-underline {
-          animation: elegantUnderlineGrow 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 2.2s forwards;
+          animation: underlineGrow 1.2s ease-out 2s forwards;
         }
 
         .typewriter-text {
           overflow: hidden;
           white-space: nowrap;
-          animation: dramaticTypewriter 2s steps(40, end) 0.5s forwards;
+          animation: typewriter 2s steps(40, end) 0.5s forwards;
         }
 
         .title-hover:hover .hover-underline {
@@ -238,7 +193,7 @@ const Home = () => {
         .animate-social,
         .animate-contact {
           opacity: 0;
-          transform: translateY(30px);
+          transform: translateY(20px);
         }
 
         /* Square cursor follower */
@@ -255,14 +210,13 @@ const Home = () => {
           background: #000;
         }
 
-        /* Lighter grid */
-        .grid-elegant {
+        /* Light grid - always visible */
+        .grid-light {
           opacity: 0.08;
-          transition: opacity 0.3s ease;
         }
       `}</style>
 
-      {/* Clean Custom Cursor */}
+      {/* Square Custom Cursor */}
       <div
         id="custom-cursor"
         className={`fixed w-4 h-4 pointer-events-none -translate-x-1/2 -translate-y-1/2 z-50 ${mouseDown ? 'clicked' : ''}`}
@@ -273,14 +227,14 @@ const Home = () => {
         }}
       />
 
-      {/* Enhanced Background Grid */}
-      <div className="absolute inset-0 grid grid-cols-12 grid-rows-12 grid-elegant pointer-events-none">
+      {/* Simple Light Background Grid - Always Visible */}
+      <div className="absolute inset-0 grid grid-cols-12 grid-rows-12 grid-light pointer-events-none">
         {[...Array(144)].map((_, i) => (
           <div key={i} className="border border-black" />
         ))}
       </div>
 
-      {/* Clean Ground Line */}
+      {/* Ground Line */}
       <div
         style={{
           position: 'fixed',
@@ -298,7 +252,7 @@ const Home = () => {
         <div className="flex flex-col md:flex-row items-center justify-between py-12">
           {/* Left Section */}
           <div className="md:w-1/2 space-y-6 relative">
-            {/* Cinematic Title Animation */}
+            {/* Title with Simple Animation */}
             <div className={`space-y-2 mt-2 ${mounted ? 'animate-title' : ''} title-hover`}>
               <h1 className="text-5xl font-bold font-mono relative typewriter-text">
                 Hi, I'm <span className="relative inline-block">
@@ -329,14 +283,14 @@ const Home = () => {
               </h1>
             </div>
 
-            {/* Smooth Subtitle */}
+            {/* Simple Subtitle */}
             <div className={`${mounted ? 'animate-subtitle' : ''}`}>
               <p className="text-xl font-mono text-gray-700">
                 Developer, Maker, and Student
               </p>
             </div>
 
-            {/* Staggered Button Animations */}
+            {/* Simple Button Animations */}
             <div className={`flex gap-3 ${mounted ? 'animate-buttons' : ''}`}>
               <ArmInteractiveButton
                 armPositions={armPositions}
@@ -393,7 +347,7 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Original Robotic Arms */}
+      {/* Robotic Arms - Unchanged */}
       <div
         style={{
           position: 'fixed',
@@ -427,7 +381,7 @@ const Home = () => {
           onGripChange={setRightGripping}
         />
         
-        {/* Clean Control Instructions */}
+        {/* Original Control Instructions - Unchanged */}
         <div
           style={{
             position: 'absolute',
