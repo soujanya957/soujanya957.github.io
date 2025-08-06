@@ -1,13 +1,16 @@
 // src/components/RoboticArm2D.tsx
 import React, { useRef, useState, useEffect } from 'react';
 
+// Arm segment lengths (can be made props if desired)
 const L1 = 120;
 const L2 = 100;
 
+// Clamp value between min and max
 function clamp(val: number, min: number, max: number) {
   return Math.max(min, Math.min(max, val));
 }
 
+// Inverse kinematics for 2D arm
 function getIK(
   base: { x: number; y: number },
   x: number,
@@ -31,7 +34,7 @@ function getIK(
     x: base.x + L1 * Math.cos(theta1) + L2 * Math.cos(theta1 + theta2),
     y: base.y + L1 * Math.sin(theta1) + L2 * Math.sin(theta1 + theta2),
   };
-  return { theta2, theta3, effector };
+  return { theta1, theta2, effector };
 }
 
 interface RoboticArm2DProps {
@@ -40,7 +43,7 @@ interface RoboticArm2DProps {
   controlKeys: 'wasd' | 'arrows';
   bendDirection?: 'left' | 'right';
   defaultTarget?: { x: number; y: number };
-  onEndEffectorMove?: (pos: { x: number; y: number }) => void;
+  onEndEffectorMove?: (pos: { x: number; y: number; claw1: { x: number; y: number }; claw2: { x: number; y: number } }) => void;
   onGripChange?: (gripping: boolean) => void;
 }
 
@@ -58,6 +61,24 @@ const RoboticArm2D: React.FC<RoboticArm2DProps> = ({
   onEndEffectorMove,
   onGripChange,
 }) => {
+  // Responsive SVG dimensions
+  const [dimensions, setDimensions] = useState({ width: window.innerWidth, height: window.innerHeight });
+
+  useEffect(() => {
+    const handleResize = () => setDimensions({ width: window.innerWidth, height: window.innerHeight });
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Clamp target to SVG bounds
+  function clampTarget(x: number, y: number) {
+    return {
+      x: clamp(x, 0, dimensions.width),
+      y: clamp(y, 0, dimensions.height),
+    };
+  }
+
+  // Target position state
   const [target, setTarget] = useState(
     defaultTarget || { x: base.x + 80, y: base.y - 40 }
   );
@@ -65,22 +86,20 @@ const RoboticArm2D: React.FC<RoboticArm2DProps> = ({
   const [gripping, setGripping] = useState(false);
   const svgRef = useRef<SVGSVGElement>(null);
 
-  // Track which keys are held down
+  // Track held keys
   const heldKeys = useRef<{ [key: string]: boolean }>({});
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Multi-key movement effect and grip
+  // Keyboard movement and grip logic
   useEffect(() => {
-    let interval: NodeJS.Timeout | null = null;
-
     const handleKeyDown = (e: KeyboardEvent) => {
       heldKeys.current[e.key] = true;
-      // Grip logic
       if (e.key === keyMap[controlKeys].grip) {
         setGripping(true);
-        if (onGripChange) onGripChange(true);
+        onGripChange?.(true);
       }
-      if (!interval) {
-        interval = setInterval(() => {
+      if (!intervalRef.current) {
+        intervalRef.current = setInterval(() => {
           setTarget((prev) => {
             let { x, y } = prev;
             const step = 6;
@@ -89,20 +108,19 @@ const RoboticArm2D: React.FC<RoboticArm2DProps> = ({
             if (heldKeys.current[map.down]) y += step;
             if (heldKeys.current[map.left]) x -= step;
             if (heldKeys.current[map.right]) x += step;
-            return { x, y };
+            // Clamp to SVG bounds
+            return clampTarget(x, y);
           });
-        }, 16); // ~60fps
+        }, 16);
       }
     };
 
     const handleKeyUp = (e: KeyboardEvent) => {
       heldKeys.current[e.key] = false;
-      // Release grip
       if (e.key === keyMap[controlKeys].grip) {
         setGripping(false);
-        if (onGripChange) onGripChange(false);
+        onGripChange?.(false);
       }
-      // If no movement keys are held, clear interval
       const map = keyMap[controlKeys];
       if (
         !heldKeys.current[map.up] &&
@@ -110,8 +128,8 @@ const RoboticArm2D: React.FC<RoboticArm2DProps> = ({
         !heldKeys.current[map.left] &&
         !heldKeys.current[map.right]
       ) {
-        if (interval) clearInterval(interval);
-        interval = null;
+        if (intervalRef.current) clearInterval(intervalRef.current);
+        intervalRef.current = null;
       }
     };
 
@@ -121,9 +139,9 @@ const RoboticArm2D: React.FC<RoboticArm2DProps> = ({
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('keyup', handleKeyUp);
-      if (interval) clearInterval(interval);
+      if (intervalRef.current) clearInterval(intervalRef.current);
     };
-  }, [controlKeys, onGripChange]);
+  }, [controlKeys, onGripChange, dimensions]);
 
   // Prevent text selection while dragging
   useEffect(() => {
@@ -137,7 +155,7 @@ const RoboticArm2D: React.FC<RoboticArm2DProps> = ({
     };
   }, [dragging]);
 
-  // Global mousemove/mouseup for smooth drag
+  // Mouse drag logic
   useEffect(() => {
     if (!dragging) return;
     const handleMove = (e: MouseEvent) => {
@@ -145,7 +163,7 @@ const RoboticArm2D: React.FC<RoboticArm2DProps> = ({
       const rect = svgRef.current.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
-      setTarget({ x, y });
+      setTarget(clampTarget(x, y));
     };
     const handleUp = () => setDragging(false);
     window.addEventListener('mousemove', handleMove);
@@ -154,15 +172,16 @@ const RoboticArm2D: React.FC<RoboticArm2DProps> = ({
       window.removeEventListener('mousemove', handleMove);
       window.removeEventListener('mouseup', handleUp);
     };
-  }, [dragging]);
+  }, [dragging, dimensions]);
 
+  // Mouse click to move target
   const handleMouseDown = () => setDragging(true);
   const handleSvgClick = (e: React.MouseEvent) => {
     if (!svgRef.current) return;
     const rect = svgRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    setTarget({ x, y });
+    setTarget(clampTarget(x, y));
   };
 
   // Calculate joint positions
@@ -172,7 +191,7 @@ const RoboticArm2D: React.FC<RoboticArm2DProps> = ({
     y: base.y + L1 * Math.sin(theta1),
   };
 
-  // Claw: two pincers at an angle, with a small gap
+  // Claw pincers
   const clawLength = 18;
   const clawAngle = gripping ? Math.PI / 18 : Math.PI / 7;
   const clawGap = gripping ? 0.05 : 0.18;
@@ -185,23 +204,25 @@ const RoboticArm2D: React.FC<RoboticArm2DProps> = ({
     y: effector.y + clawLength * Math.sin(theta1 + theta2 - clawAngle - clawGap),
   };
 
-  // SVG size
-  const width = window.innerWidth;
-  const height = window.innerHeight;
-
-  // Notify parent of effector position
+  // Notify parent of effector and claws position
   useEffect(() => {
-    if (typeof onEndEffectorMove === 'function') {
-      onEndEffectorMove(effector);
+    if (onEndEffectorMove) {
+      onEndEffectorMove({
+        x: effector.x,
+        y: effector.y,
+        claw1,
+        claw2,
+      });
     }
+    // Only update when effector or claws change
     // eslint-disable-next-line
-  }, [effector.x, effector.y]);
+  }, [effector.x, effector.y, claw1.x, claw1.y, claw2.x, claw2.y]);
 
   return (
     <svg
       ref={svgRef}
-      width={width}
-      height={height}
+      width={dimensions.width}
+      height={dimensions.height}
       style={{
         position: 'fixed',
         left: 0,
@@ -211,6 +232,8 @@ const RoboticArm2D: React.FC<RoboticArm2DProps> = ({
         pointerEvents: 'none',
         zIndex: 20,
       }}
+      aria-label="2D Robotic Arm"
+      tabIndex={-1}
       onClick={handleSvgClick}
     >
       {/* Arm base */}
@@ -226,7 +249,7 @@ const RoboticArm2D: React.FC<RoboticArm2DProps> = ({
       {/* Claw pincers */}
       <line x1={effector.x} y1={effector.y} x2={claw1.x} y2={claw1.y} stroke={endEffectorColor} strokeWidth={4} strokeLinecap="round" />
       <line x1={effector.x} y1={effector.y} x2={claw2.x} y2={claw2.y} stroke={endEffectorColor} strokeWidth={4} strokeLinecap="round" />
-      {/* Target pointer (smaller) */}
+      {/* Target pointer */}
       <circle
         cx={target.x}
         cy={target.y}

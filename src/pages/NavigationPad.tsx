@@ -1,7 +1,12 @@
-// NavigationPad.tsx
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaHome, FaFolderOpen, FaUser, FaCog, FaBell, FaEnvelope, FaChartBar, FaStar, FaQuestion } from 'react-icons/fa';
+
+interface NavigationPadProps {
+  isOpen: boolean;
+  setIsOpen: (open: boolean) => void;
+  isTerminalOpen: boolean;
+}
 
 const BUTTONS = [
   { icon: <FaHome />, label: 'Home', shortcut: '1' },
@@ -27,8 +32,7 @@ const BLOCKED_KEYS = [
   '0'
 ];
 
-const NavigationPad: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
+const NavigationPad: React.FC<NavigationPadProps> = ({ isOpen, setIsOpen, isTerminalOpen }) => {
   const [focused, setFocused] = useState(0);
   const [underConstruction, setUnderConstruction] = useState<string | null>(null);
   const buttonRefs = useRef<Array<HTMLButtonElement | null>>([]);
@@ -36,10 +40,12 @@ const NavigationPad: React.FC = () => {
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (!isOpen) {
-        if (event.key === 'n' || event.key === 'N') setIsOpen(true);
+      // Only open if not already open and terminal is not open
+      if (!isOpen && !isTerminalOpen && (event.key === 'n' || event.key === 'N')) {
+        setIsOpen(true);
         return;
       }
+      if (!isOpen) return;
 
       // Block WASD, arrows, and "0" from reaching other handlers
       if (BLOCKED_KEYS.includes(event.key)) {
@@ -80,8 +86,7 @@ const NavigationPad: React.FC = () => {
 
     window.addEventListener('keydown', handleKeyDown, true);
     return () => window.removeEventListener('keydown', handleKeyDown, true);
-    // eslint-disable-next-line
-  }, [isOpen, focused]);
+  }, [isOpen, focused, isTerminalOpen, setIsOpen]);
 
   useEffect(() => {
     if (isOpen && buttonRefs.current[focused]) {
@@ -91,12 +96,18 @@ const NavigationPad: React.FC = () => {
 
   const handleButtonAction = (idx: number) => {
     if (idx === 0) {
-      navigate('/home');
+      navigate('/');
       setIsOpen(false);
     } else if (idx === 1) {
       navigate('/projects');
       setIsOpen(false);
-    } else {
+    }
+    else if (idx == 2) {
+        navigate('/about');
+        setIsOpen(false);
+    } 
+    else 
+    {
       setUnderConstruction(BUTTONS[idx].label);
       setTimeout(() => setUnderConstruction(null), 1200);
     }

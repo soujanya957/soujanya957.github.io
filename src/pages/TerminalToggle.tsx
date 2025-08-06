@@ -1,6 +1,11 @@
-// src/pages/TerminalToggle.tsx
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+
+interface TerminalToggleProps {
+  isOpen: boolean;
+  setIsOpen: (open: boolean) => void;
+  isNavPadOpen: boolean;
+}
 
 // --- Types and Fake File System ---
 type FileSystem = {
@@ -80,7 +85,6 @@ const ALL_COMMANDS = [
   'cd', 'ls', 'cat', 'whoami', 'random', 'sound', 'history', 'ps', 'top', 'jobs', 'ssh', 'exit', 'clear', 'close', 'help'
 ];
 
-// Logical pages for navigation and ls
 const PAGES = [
   { name: 'home', path: '/' },
   { name: 'about', path: '/about' },
@@ -88,9 +92,7 @@ const PAGES = [
   { name: 'contact', path: '/contact' }
 ];
 
-// --- TerminalToggle Component ---
-const TerminalToggle: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
+const TerminalToggle: React.FC<TerminalToggleProps> = ({ isOpen, setIsOpen, isNavPadOpen }) => {
   const [input, setInput] = useState('');
   const [history, setHistory] = useState<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState<number | null>(null);
@@ -104,7 +106,6 @@ const TerminalToggle: React.FC = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   const location = useLocation();
-  // Stack to track navigation for cd ..
   const navStack = useRef<string[]>([]);
 
   // Responsive terminal width/height
@@ -114,7 +115,7 @@ const TerminalToggle: React.FC = () => {
       const vw = window.innerWidth * 0.8;
       const vh = window.innerHeight * 0.8;
       let width = Math.min(900, vw);
-      let height = width * 0.625; // 16:10 ratio
+      let height = width * 0.625;
       if (height > vh) {
         height = vh;
         width = height * 1.6;
@@ -126,32 +127,22 @@ const TerminalToggle: React.FC = () => {
     return () => window.removeEventListener('resize', updateDimensions);
   }, []);
 
-  // Only open/close terminal with global key when not focused on an input
+  // Only open terminal with "0" if nav pad is not open
   useEffect(() => {
     const handleGlobalKeyDown = (event: KeyboardEvent) => {
-      if (isOpen) return;
-      if (
-        (event.target instanceof HTMLInputElement) ||
-        (event.target instanceof HTMLTextAreaElement) ||
-        (event.target instanceof HTMLSelectElement) ||
-        (event.target as HTMLElement)?.isContentEditable
-      ) {
-        return;
-      }
-      if (event.key === '0') {
+      if (!isOpen && !isNavPadOpen && event.key === '0') {
         event.preventDefault();
         event.stopPropagation();
         setIsOpen(true);
         setInput('');
         setHistoryIndex(null);
         setMessage({ text: 'Type help to see all commands.', isError: false });
-      // Clear input after a tick to remove any accidental "0"
         setTimeout(() => setInput(''), 0);
       }
     };
     window.addEventListener('keydown', handleGlobalKeyDown);
     return () => window.removeEventListener('keydown', handleGlobalKeyDown);
-  }, [isOpen]);
+  }, [isOpen, isNavPadOpen, setIsOpen]);
 
   // Terminal-specific key handling (only when open)
   useEffect(() => {
@@ -195,7 +186,7 @@ const TerminalToggle: React.FC = () => {
 
     window.addEventListener('keydown', handleTerminalKeyDown, true);
     return () => window.removeEventListener('keydown', handleTerminalKeyDown, true);
-  }, [isOpen, input, historyIndex, history]);
+  }, [isOpen, input, historyIndex, history, setIsOpen]);
 
   useEffect(() => {
     if (isOpen && inputRef.current) {
@@ -210,7 +201,8 @@ const TerminalToggle: React.FC = () => {
       utter.rate = 0.7;
       utter.pitch = 0.3;
       utter.volume = 1;
-      utter.voice = window.speechSynthesis.getVoices().find(v => v.name.toLowerCase().includes('robot')) || null;
+      const voices = window.speechSynthesis.getVoices();
+      utter.voice = voices.find(v => v.name.toLowerCase().includes('robot')) || null;
       window.speechSynthesis.speak(utter);
     } else {
       setMessage({ text: "Sorry, your browser doesn't support speech synthesis.", isError: true });
@@ -295,7 +287,6 @@ const TerminalToggle: React.FC = () => {
       } else {
         const prev = navStack.current.pop()!;
         setCwd(prev);
-        // Find the page for this path, default to '/' if not found
         const page = PAGES.find(p => p.path === prev);
         navigate(page ? page.path : '/');
         if (showMessage) setMessage({ text: `Returned to previous page.`, isError: false });
